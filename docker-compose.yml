@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  aosp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: 1000
+        GID: 1000
+        USER_NAME: ${USER_NAME}
+        USER_EMAIL: ${USER_EMAIL}
+    container_name: aosp_builder
+    privileged: true
+    security_opt:
+      - seccomp=unconfined
+    volumes:
+      - ${PATH_TO_SRC}:/srv/src/
+      - /dev:/dev
+    tty: true
+    stdin_open: true
