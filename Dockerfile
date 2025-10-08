@@ -46,6 +46,7 @@ RUN apt-get update && apt-get install -y \
     kpartx \
     mtools \
     pkg-config \
+    zsh \
     && apt-get clean
 
 RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo && \
@@ -72,6 +73,10 @@ RUN addgroup --gid $GID user && \
     chmod 0440 /etc/sudoers.d/user
 
 USER user
+
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+RUN sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"bureau\"/" ~/.zshrc
 
 RUN git config --global user.email "${USER_EMAIL}" && \
     git config --global user.name "${USER_NAME}"
